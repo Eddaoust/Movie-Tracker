@@ -1,17 +1,26 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, FlatList} from 'react-native';
+import Card from "../../components/Card";
+import {useSelector} from "react-redux";
 
 const MoviesListScreen = props => {
+    const movies = useSelector(state => state.movies);
 
     return (
-        <View>
-            <Text>Hello</Text>
+        <View style={styles.container}>
+            <FlatList
+                data={movies.data}
+                renderItem={({item}) => <Card poster={item.poster} title={item.title} addMovie={() => {}}/>}
+                keyExtractor={(item, index) => (item.id + index).toString()}
+            />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1
+    }
 });
 
 export default MoviesListScreen;

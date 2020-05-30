@@ -4,6 +4,10 @@ export const FETCH_MOVIE_REQUEST = 'FETCH_MOVIE_REQUEST';
 export const FETCH_MOVIE_SUCCESS = 'FETCH_MOVIE_SUCCESS';
 export const FETCH_MOVIE_ERROR = 'FETCH_MOVIE_ERROR';
 
+export const ADD_MOVIE_REQUEST = 'FETCH_MOVIE_REQUEST';
+export const ADD_MOVIE_SUCCESS = 'FETCH_MOVIE_SUCCESS';
+export const ADD_MOVIE_ERROR = 'FETCH_MOVIE_ERROR';
+
 export function fetchMovieRequest() {
     return {
         type: FETCH_MOVIE_REQUEST,
@@ -48,3 +52,23 @@ const loadData = async (title, index) => {
         rating: 0
     };
 };
+
+export function addMovieRequest() {
+    return {
+        type: ADD_MOVIE_REQUEST,
+    };
+}
+
+export function addMovieError(error) {
+    return {
+        type: ADD_MOVIE_ERROR,
+        data: error
+    };
+}
+
+export function addMovieSuccess(movie) {
+    return {
+        type: ADD_MOVIE_SUCCESS,
+        data: movie
+    };
+}

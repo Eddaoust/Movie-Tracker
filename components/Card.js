@@ -1,19 +1,14 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image, Text, Dimensions} from 'react-native';
 import {getImageFromApi} from "../helpers/functions";
 
 const Card = props => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={props.addMovie}>
                 <View style={styles.grid}>
-                    <View>
-                        <Image style={styles.img} source={{uri: getImageFromApi(props.poster)}}/>
-                    </View>
-                    <View style={styles.textContent}>
-                        <Text style={styles.title}>{props.title}</Text>
-                    </View>
+                    <Image style={styles.img} source={{uri: getImageFromApi(props.poster)}}/>
                 </View>
             </TouchableOpacity >
         </View>
@@ -22,30 +17,28 @@ const Card = props => {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 5,
-        marginVertical: 5
+        flex:1,
+        maxWidth: Dimensions.get('window').width / 3 - 10, // Width / 3 - (marginLeft and marginRight for the components)
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5
     },
     img: {
-        width: 120,
-        height: 200,
-        marginRight: 5
+        width: (Dimensions.get('window').width) * 0.28,
+        height: 190,
+        borderRadius: 10
     },
     grid: {
-        flexDirection: 'row'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 7,
+        },
+        shadowOpacity: 0.43,
+        shadowRadius: 9.51,
+        elevation: 15,
     },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 15
-    },
-    description: {
-        width: 240,
-        fontSize: 12,
-        color: 'grey',
-    },
-    textContent: {
-        width: '100%'
-    }
 });
 
 export default Card;

@@ -1,23 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback, Keyboard, FlatList, Text} from 'react-native';
+import {StyleSheet, View, TouchableWithoutFeedback, Keyboard, FlatList, Text, Dimensions, ScrollView} from 'react-native';
+import {useDispatch} from "react-redux";
 import Search from "../../components/Search";
-import {requestMovie} from "../../helpers/functions";
 import Card from "../../components/Card";
+import {requestMovie} from "../../helpers/functions";
+import {addMovieSuccess} from "../../store/actions/movies";
 
 const SearchScreen = props => {
+    const dispatch = useDispatch();
     const [searchResults, setSearchResults] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    let list = <Text>Pas d'éléments</Text>
-
-    if (searchResults.length !== 0) {
-        list = (
-            <FlatList
-                data={searchResults}
-                renderItem={({item}) => <Card poster={item.poster_path} title={item.title}/>}
-                keyExtractor={item => item.id}
-            />
-        );
-    }
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -32,17 +24,46 @@ const SearchScreen = props => {
         };
     }, [inputValue]);
 
+    // Add movie to global state
+    const addMovie = (movieData) => {
+        const movie = {
+            id: movieData.id,
+            title: movieData.title,
+            description: movieData.overview,
+            release: movieData.release_date,
+            poster: movieData.poster_path,
+            isWatched: false,
+            rating: 0,
+            public_rating: movieData.vote_average
+        };
+        dispatch(addMovieSuccess(movie));
+    };
+
+    let list = <Text style={styles.emptylist}>Pas d'éléments</Text>
+    if (searchResults.length !== 0) {
+        list = (
+            <FlatList
+                data={searchResults}
+                renderItem={({item}) => <Card poster={item.poster_path} title={item.title} addMovie={() => {addMovie(item);}}/>}
+                keyExtractor={(item, index) => (item.id + index).toString()}
+                numColumns={3}
+            />
+        );
+    }
+
 
 
     return (
         <TouchableWithoutFeedback
             onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
-                <Search
-                    value={inputValue}
-                    onChangeText={text => setInputValue(text)}
-                />
-                <View>
+                <View style={styles.inputContainer}>
+                    <Search
+                        value={inputValue}
+                        onChangeText={text => setInputValue(text)}
+                    />
+                </View>
+                <View style={searchResults.length === 0 ? styles.emptyListContainer : styles.listContainer}>
                     {list}
                 </View>
             </View>
@@ -55,11 +76,22 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#E3E7E9'
     },
-    img: {
-        width: 120,
-        height: 200,
-        marginRight: 5
+    emptylist: {
+        fontSize: 22,
+        color: '#fb1',
+        textAlign: 'center'
     },
+    emptyListContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    listContainer: {
+        width: '100%'
+    },
+    inputContainer: {
+        marginTop: 30
+    }
 });
 
 export default SearchScreen;
