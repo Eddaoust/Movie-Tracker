@@ -79,12 +79,13 @@ const styles = StyleSheet.create({
     emptylist: {
         fontSize: 22,
         color: '#fb1',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'comfortaa-bold'
     },
     emptyListContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     listContainer: {
         width: '100%'
