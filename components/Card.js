@@ -1,16 +1,18 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Image, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, TouchableHighlight, Image, Dimensions, Text} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
 import {getImageFromApi} from "../helpers/functions";
 
 const Card = props => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={props.addMovie}>
-                <View style={styles.grid}>
-                    <Image style={styles.img} source={{uri: getImageFromApi(props.poster)}}/>
-                </View>
-            </TouchableOpacity >
+            <View style={styles.grid}>
+                <Image style={styles.img} source={{uri: getImageFromApi(props.poster)}}/>
+                <TouchableHighlight underlayColor="grey" style={styles.addBtn} onPress={props.addMovie}>
+                    <Ionicons name="md-add" size={20} color="#2E3131" />
+                </TouchableHighlight>
+            </View>
         </View>
     );
 };
@@ -26,7 +28,6 @@ const styles = StyleSheet.create({
     img: {
         width: (Dimensions.get('window').width) * 0.28,
         height: 190,
-        borderRadius: 10
     },
     grid: {
         alignItems: 'center',
@@ -38,7 +39,20 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.43,
         shadowRadius: 9.51,
         elevation: 15,
+        borderRadius: 10,
+        overflow: 'hidden'
     },
+    addBtn: {
+        position: 'absolute',
+        bottom: 10,
+        left: '65%',
+        width: '30%',
+        backgroundColor: 'rgba(232, 232, 232, 1)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomLeftRadius: 10,
+        borderTopLeftRadius: 10,
+    }
 });
 
 export default Card;

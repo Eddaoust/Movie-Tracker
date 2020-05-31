@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback, Keyboard, FlatList, Text, Dimensions, ScrollView} from 'react-native';
+import {StyleSheet, View, TouchableWithoutFeedback, Keyboard, FlatList, Text} from 'react-native';
 import {useDispatch} from "react-redux";
 import Search from "../../components/Search";
 import Card from "../../components/Card";
@@ -16,7 +16,15 @@ const SearchScreen = props => {
             if (inputValue.length !== 0) {
                 fetch(requestMovie(inputValue))
                     .then(response => response.json())
-                    .then(response => setSearchResults(response.results))
+                    .then(response => {
+                        const result = [];
+                        response.results.map(item => {
+                            if (item.poster_path !== null) {
+                                result.push(item);
+                            }
+                        });
+                        setSearchResults(result);
+                    })
             }
         }, 500);
         return () => {
@@ -50,8 +58,6 @@ const SearchScreen = props => {
             />
         );
     }
-
-
 
     return (
         <TouchableWithoutFeedback
@@ -88,7 +94,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     listContainer: {
-        width: '100%'
+        width: '100%',
+        flex: 1
     },
     inputContainer: {
         marginTop: 30
