@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, Text, FlatList} from 'react-native';
-import Card from "../../components/Card";
 import {useSelector} from "react-redux";
 
 const MoviesListScreen = props => {
@@ -10,7 +9,7 @@ const MoviesListScreen = props => {
         <View style={styles.container}>
             <FlatList
                 data={movies.data}
-                renderItem={({item}) => <Card poster={item.poster} title={item.title} addMovie={() => {}}/>}
+                renderItem={({item}) => <Text>{item.title}</Text>}
                 keyExtractor={(item, index) => (item.id + index).toString()}
             />
         </View>

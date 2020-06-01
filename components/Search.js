@@ -1,8 +1,17 @@
 import React from 'react';
-import {StyleSheet, TextInput, SafeAreaView, View} from 'react-native';
+import {StyleSheet, TextInput, SafeAreaView, View, TouchableWithoutFeedback} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
 const Search = props => {
+    // Set the cancel btn when input is fill
+    let icon = <Ionicons name="ios-search" size={20} color="blue" />;
+    if (props.value.length !== 0) {
+        icon = (
+            <TouchableWithoutFeedback onPress={props.onCancel}>
+                <Ionicons name="md-close" size={20} color="blue" />
+            </TouchableWithoutFeedback>
+        );
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -12,8 +21,9 @@ const Search = props => {
                     style={styles.input}
                     placeholder="Chercher un film..."
                     returnKeyType="search"
+                    autoCorrect={false}
                 />
-                <Ionicons name="ios-search" size={20} color="blue" />
+                {icon}
             </View>
         </SafeAreaView>
     );
