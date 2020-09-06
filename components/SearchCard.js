@@ -26,13 +26,14 @@ const SearchCard = props => {
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        //flex:1,
         maxWidth: Dimensions.get('window').width / 3, // Width / 3 - (marginLeft and marginRight for the components)
         justifyContent: 'center',
         alignItems: 'center',
+        margin: 5
     },
     img: {
-        width: (Dimensions.get('window').width) * 0.33,
+        width: (Dimensions.get('window').width) * 0.28,
         height: 190,
     },
     grid: {
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     addBtn: {
         position: 'absolute',
         bottom: 10,
-        left: '65%',
+        left: '70%',
         width: '30%',
         backgroundColor: 'rgba(232, 232, 232, 1)',
         justifyContent: 'center',
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     addBtnDisabled: {
         position: 'absolute',
         bottom: 10,
-        left: '65%',
+        left: '70%',
         width: '30%',
         backgroundColor: '#fb1',
         justifyContent: 'center',
